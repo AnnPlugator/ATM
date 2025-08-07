@@ -22,6 +22,7 @@ public class AtmSearchApiTestForANonExistentCity {
                 .when()
                 .get()
                 .then()
+                .log().all()
                 .statusCode(200) // или 204, если API так устроено
                 .extract()
                 .response();

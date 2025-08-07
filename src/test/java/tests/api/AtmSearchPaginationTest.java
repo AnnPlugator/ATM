@@ -32,6 +32,7 @@ public class AtmSearchPaginationTest {
                 .when()
                 .get()
                 .then()
+                .log().all()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
                 .extract()
