@@ -1,5 +1,6 @@
-package api;
+package tests.api;
 
+import api.BaseApiTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class CreateClientTest extends BaseApiTest {
                 "}";
 
         Response response = given()
-                .header("Authorization", "Bearer your_token_here") // замени на рабочий токен
+                .header("Authorization", "Bearer your_token_here") // заменить на рабочий токен
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()

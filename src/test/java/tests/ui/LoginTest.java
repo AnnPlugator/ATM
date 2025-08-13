@@ -1,6 +1,5 @@
 package tests.ui;
 
-import base.BaseTest;
 import org.junit.jupiter.api.Test;
 import pages.LoginPage;
 

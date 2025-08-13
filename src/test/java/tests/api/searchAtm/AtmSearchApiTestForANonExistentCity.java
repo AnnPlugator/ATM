@@ -1,4 +1,4 @@
-package tests.api;
+package tests.api.searchAtm;
 
 import api.models.AtmResponse;
 import io.restassured.RestAssured;
@@ -23,7 +23,7 @@ public class AtmSearchApiTestForANonExistentCity {
                 .get()
                 .then()
                 .log().all()
-                .statusCode(200) // или 204, если API так устроено
+                .statusCode(200)
                 .extract()
                 .response();
 

@@ -1,4 +1,4 @@
-package tests.api;
+package tests.api.searchAtm;
 
 import api.helpers.AtmApiHelper;
 import api.models.AtmResponse;
@@ -17,6 +17,7 @@ public class AtmSearchApiTest {
         baseURI = "http://172.17.1.70:32005";
         basePath = "/info/api/v1/atm/search";
     }
+
     @DisplayName("Получение банкоматов по городу и поисковому запросу")
     @Test
     public void testSearchAtmsByCityAndQuery() {
