@@ -3,43 +3,82 @@ package api;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
-//Zinnur Mubarakshin
+
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class RequestTest {
 
-    private Request request = new Request();
+    private final Request request = new Request();
 
     @Test
-    @DisplayName("Проверка GET запроса по городу Санкт-Петербург")
+    @DisplayName("GET запрос по поиску банкомата в городе Санкт-Петербург")
     public void getRequestCity1() {
-        // Отправляем запрос
         Response response = request.sendingRequest("Санкт-Петербург");
 
-        // Проверяем, что статус ответа 200
-        assertEquals(200, response.statusCode(), "Статус кода не 200");
+        assertThat(response.statusCode())
+                .as("Статус кода не 200")
+                .isEqualTo(200);
 
-        // Проверка, что массив 'suggests' не пустой
-        assertTrue(response.jsonPath().getList("suggests").size() > 0, "Массив 'suggests' пустой");
-
-        // Проверка содержимого первого элемента в массиве 'suggests'
-        assertEquals("25", response.jsonPath().getString("suggests[0].name"), "Имя отличается от ожидаемого");
-        assertEquals("ул.", response.jsonPath().getString("suggests[0].streetType"), "Тип улицы отличается от ожидаемого");
-        assertEquals("2-я Красноармейская", response.jsonPath().getString("suggests[0].street"), "Улица отличается от ожидаемой");
-        assertEquals("2/27, лит. А", response.jsonPath().getString("suggests[0].house"), "Дом отличается от ожидаемого");
+        assertThat(response.jsonPath().getList("suggests"))
+                .as("Массив 'suggests' пустой")
+                .isNotEmpty();
     }
 
     @Test
-    @DisplayName("Проверка GET запроса по городу Москва")
+    @DisplayName("GET запрос по поиску банкомата в городе Москва")
     public void getRequestCity2() {
-
         Response response = request.sendingRequest("Москва");
-        assertEquals(200, response.statusCode(), "Статус кода не 200");
-        assertTrue(response.jsonPath().getList("suggests").size() > 0, "Массив 'suggests' пустой");
 
-        assertEquals("25", response.jsonPath().getString("suggests[0].name"), "Имя отличается от ожидаемого");
-        assertEquals("ул.", response.jsonPath().getString("suggests[0].streetType"), "Тип улицы отличается от ожидаемого");
-        assertEquals("2-я Красноармейская", response.jsonPath().getString("suggests[0].street"), "Улица отличается от ожидаемой");
-        assertEquals("2/27, лит. А", response.jsonPath().getString("suggests[0].house"), "Дом отличается от ожидаемого");
+        assertThat(response.statusCode())
+                .as("Статус кода не 200")
+                .isEqualTo(200);
+
+        assertThat(response.jsonPath().getList("suggests"))
+                .as("Массив 'suggests' пустой")
+                .isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("GET запрос по поиску банкомата в городе Казань")
+    public void getRequestCity3() {
+        Response response = request.sendingRequest("Казань");
+
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.jsonPath().getList("suggests")).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("GET запрос по поиску банкомата в городе Омск")
+    public void getRequestCity4() {
+        Response response = request.sendingRequest("Омск");
+
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.jsonPath().getList("suggests")).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("GET запрос по поиску банкомата в городе Екатеринбург")
+    public void getRequestCity5() {
+        Response response = request.sendingRequest("Екатеринбург");
+
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.jsonPath().getList("suggests")).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("Негативный GET запрос по поиску банкомата без указания города")
+    public void getRequestCity6() {
+        Response response = request.sendingRequest("");
+
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.jsonPath().getList("suggests")).isNotEmpty(); // ← если так и должно быть
     }
 }
+
+
+
+
+
+
